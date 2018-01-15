@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/peterlxb/node-starter/issues"
   },
-  "homepage": "https://github.com/peterlxb/node-starter#readme"
+  "homepage": "https://github.com/peterlxb/node-starter#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }
