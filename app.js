@@ -2,11 +2,15 @@ console.log("starting the app");
 
 const fs = require('fs');
 const _ = require('lodash');
+const yargs = require('yargs');
 
 const notes = require('./notes.js')
 
+var args = yargs.argv;
 var command = process.argv[2];
-//console.log(process.argv);
+
+console.log("Process ", process.argv);
+console.log("Yargs: ",args);
 
 // process.argv.forEach((val,index) => {
 //     console.log(`${index}: ${val}`);
@@ -14,14 +18,16 @@ var command = process.argv[2];
 
 function checkArgvs(command){
     if(command === 'add') {
-        console.log('Add note');
+       notes.addNotes(args["title"],args["body"]);
     } else if (command === 'list') {
-        console.log("list note");
+        notes.getAll();
     } else if (command === 'read') {
-        console.log("reading notes")
+        notes.readNotes(args["title"]);
     } else if(command === 'remove') {
-        console.log("removing notes")
-    } else {
+        notes.removeNotes(args["title"]);
+    } else if(command === 'update') {
+        notes.updateNotes(args["title"],args["body"]);
+    }else {
         console.log("Commands not recognized");
     }
 }
