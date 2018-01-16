@@ -1,7 +1,35 @@
 console.log("starting the notes")
 
+const fs = require("fs");
+
 const addNotes = (title,body) => {
-    console.log("Adding note ", title, body);
+    var notes = [];
+    var note = {
+        title,
+        body
+    }
+
+    try{
+        var notesString = fs.readFileSync("notes-data.json");
+        notes = JSON.parse(notesString);
+        //console.log(notes);
+        for(item of notes){
+            console.log(item.title);
+        }
+    } catch(e) {
+        console.log(e);
+    }
+    //check if given note is duplicate
+    var duplicateNotes = notes.filter((note) => {
+        return note.title === title;
+    });
+    //if given note is not duplicate(length===0) just add it to notes array
+    if(duplicateNotes.length === 0){
+        notes.push(note);
+        fs.writeFileSync("notes-data.json",JSON.stringify(notes));
+    }
+
+    
 }
 
 const getAll = () => {
