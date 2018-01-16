@@ -2,22 +2,24 @@ console.log("starting the notes")
 
 const fs = require("fs");
 
+var fetchNotes = () => {
+    try{
+        var notesString = fs.readFileSync("notes-data.json");
+        return JSON.parse(notesString);
+    } catch(e){
+        return [];
+    }
+};
+
+var saveNotes = (notes) => {
+    fs.writeFileSync("notes-data.json",JSON.stringify(notes));
+};
+
 const addNotes = (title,body) => {
-    var notes = [];
+    var notes = fetchNotes();
     var note = {
         title,
         body
-    }
-
-    try{
-        var notesString = fs.readFileSync("notes-data.json");
-        notes = JSON.parse(notesString);
-        //console.log(notes);
-        for(item of notes){
-            console.log(item.title);
-        }
-    } catch(e) {
-        console.log(e);
     }
     //check if given note is duplicate
     var duplicateNotes = notes.filter((note) => {
@@ -26,14 +28,14 @@ const addNotes = (title,body) => {
     //if given note is not duplicate(length===0) just add it to notes array
     if(duplicateNotes.length === 0){
         notes.push(note);
-        fs.writeFileSync("notes-data.json",JSON.stringify(notes));
+        saveNotes(notes);
+        return note;
     }
-
-    
 }
 
 const getAll = () => {
-    console.log("showing all notes");
+    var allNotes = fetchNotes();
+    return allNotes;
 }
 
 const getNotes = (title) => {
@@ -42,6 +44,12 @@ const getNotes = (title) => {
 
 const removeNotes = (title) => {
     console.log("Removing note ", title);
+
+    var notes = fetchNotes(); // an array of node
+    var filterNotes = notes.filter((note) => note.title !== title);
+    saveNotes(filterNotes);
+
+    return notes.length !== filterNotes.length;
 }
 
 const updateNotes = (title,body) => {

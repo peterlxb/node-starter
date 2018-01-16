@@ -27,13 +27,24 @@ console.log("Yargs: ",args);
 
 function checkArgvs(command){
     if(command === 'add') {
-       notes.addNotes(args.title,args.body);
+       var note = notes.addNotes(args.title,args.body);
+       if(note){
+           console.log(`new note ${note.title} added`);
+       } else {
+           console.log("new added failed");
+       }
     } else if (command === 'list') {
-        notes.getAll();
+        var allNotes = notes.getAll();
+        console.log(`There are  ${allNotes.length} notes here: `,allNotes);
     } else if (command === 'read') {
         notes.getNotes(args.title);
     } else if(command === 'remove') {
-        notes.removeNotes(args.title);
+        var result = notes.removeNotes(args.title);
+        if(result){
+            console.log("remove note success");
+        } else {
+            console.log("remove note failed");
+        }
     } else if(command === 'update') {
         notes.updateNotes(args.title,args.body);
     }else {
