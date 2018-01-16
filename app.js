@@ -6,7 +6,33 @@ const yargs = require('yargs');
 
 const notes = require('./notes.js')
 
-var args = yargs.argv;
+const titleOption = {
+    describe:'Title of note',
+    demand:true,
+    alias:'t'
+};
+
+const bodyOption = {
+    describe:'Body of note',
+    demand:true,
+    alias:'b'
+}
+
+var args = yargs
+        .command('add','Add a new note',{
+            title: titleOption,
+            body: bodyOption
+        })
+        .command('list','List all notes')
+        .command('read','Read a note',{
+            title: titleOption
+        })
+        .command('remove','Remove a note',{
+            title: titleOption
+        })
+        .help()
+        .argv;
+
 var command = args._[0];
 /*
    @@@
@@ -35,7 +61,8 @@ function checkArgvs(command){
        }
     } else if (command === 'list') {
         var allNotes = notes.getAll();
-        console.log(`There are  ${allNotes.length} notes here: `,allNotes);
+        console.log(`There are ${allNotes.length} notes `);
+        allNotes.forEach(note => notes.logNote(note));
     } else if (command === 'read') {
         var note = notes.getNotes(args.title);
         if(note){
@@ -52,7 +79,7 @@ function checkArgvs(command){
         }
     } else if(command === 'update') {
         notes.updateNotes(args.title,args.body);
-    }else {
+    } else {
         console.log("Commands not recognized");
     }
 }
