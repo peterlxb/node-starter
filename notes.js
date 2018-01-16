@@ -59,7 +59,8 @@ const updateNotes = (title,body) => {
 }
 
 const logNote = (note) => {
-    console.log("---");
+   
+    console.log("-----");
     console.log(`Title: ${note.title}`);
     console.log(`Body: ${note.body}`);
 }
