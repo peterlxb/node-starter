@@ -29,7 +29,7 @@ function checkArgvs(command){
     if(command === 'add') {
        var note = notes.addNotes(args.title,args.body);
        if(note){
-           console.log(`new note ${note.title} added`);
+           notes.logNote(note);
        } else {
            console.log("new added failed");
        }
@@ -37,7 +37,12 @@ function checkArgvs(command){
         var allNotes = notes.getAll();
         console.log(`There are  ${allNotes.length} notes here: `,allNotes);
     } else if (command === 'read') {
-        notes.getNotes(args.title);
+        var note = notes.getNotes(args.title);
+        if(note){
+            notes.logNote(note);
+        } else {
+            console.log("can't find the note");
+        }
     } else if(command === 'remove') {
         var result = notes.removeNotes(args.title);
         if(result){

@@ -39,7 +39,9 @@ const getAll = () => {
 }
 
 const getNotes = (title) => {
-    console.log("Reading note of " ,title);
+    var notes = fetchNotes(); // an array of node
+    var note = notes.filter((note) => note.title === title);
+    return note[0];
 }
 
 const removeNotes = (title) => {
@@ -56,10 +58,17 @@ const updateNotes = (title,body) => {
     console.log("Update the note ",title , " of ", body);
 }
 
+const logNote = (note) => {
+    console.log("---");
+    console.log(`Title: ${note.title}`);
+    console.log(`Body: ${note.body}`);
+}
+
 module.exports = {
     addNotes,
     getAll,
     getNotes,
     removeNotes,
     updateNotes,
+    logNote,
 }
