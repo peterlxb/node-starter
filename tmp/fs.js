@@ -8,6 +8,10 @@ fs.rename('./tmp/hello','./tmp/world',function(err){
         if(err) throw err;
         console.log(`stats: ${JSON.stringify(stats)}`);
     });
-    
+
 });
 
+fs.appendFile('./tmp/world','data to apppend',function(err){
+    if(err) throw err;
+    console.log('The "data to append" was appended to file!');
+})
