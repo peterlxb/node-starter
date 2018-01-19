@@ -24,10 +24,16 @@ request({
     url: url,
     json:true
 }, (error, response, body) => {
-   // console.log('err: ',error);
-   // console.log('statusCode: ', response && response.statusCode);
-    console.log(`Address: ${body.regeocode.formatted_address} `);
-    console.log(`Latitude: ${body.regeocode.addressComponent.streetNumber.location}`);
-    console.log(`Longitude: ${body.regeocode.addressComponent.streetNumber.location}`);
+    console.log(body.status === "1");
+   if(error) {
+       console.log('Unable to connect to Google Server');
+   } else if(body.status === "ZERO_RESULTS"){
+       console.log("Unable to find address");
+   } else if(body.status === "1"){
+       console.log(`Address: ${body.regeocode.formatted_address} `);
+       console.log(`Latitude: ${body.regeocode.addressComponent.streetNumber.location}`);
+       console.log(`Longitude: ${body.regeocode.addressComponent.streetNumber.location}`);
+   } 
+    
 });
 
