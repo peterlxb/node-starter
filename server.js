@@ -47,6 +47,12 @@ app.get('/about', (req, res) => res.render('about.hbs',
         message: 'Some hbs text here'
     }));
 
+app.get('/projects', (req, res) => res.render('projects.hbs',
+    {
+        PageTitle: 'Projects Page',
+        message: 'Some projects here'
+    }));
+
 app.post('/',function(req,res){
     res.send('Got a POST request');
 })
