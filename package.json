@@ -1,5 +1,5 @@
 {
-  "name": "weather-app",
+  "name": "node-server-app",
   "version": "1.0.0",
   "description": "learning node",
   "main": "app.js",
