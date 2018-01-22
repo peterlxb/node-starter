@@ -1,10 +1,30 @@
 const express = require('express');
 const app = express();
-const path = require('path')
+const path = require('path');
+const fs = require('fs');
 var hbs = require('hbs');
 
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
+
+
+app.use((req,res,next) => {
+    var now = new Date().toString();
+    var log = `${now}: ${req.method} ${req.url}`;
+
+    console.log(log);
+    fs.appendFile('serve.log',log + '\n',(err)=> {
+        if(err){
+            console.log('Unable to append to serve.log');
+        }
+    });
+    next();
+});
+
+// app.use((req,res,next) => {
+//     res.render('maintain.hbs');
+// });
+
 app.use(express.static(__dirname + '/public'));
 
 hbs.registerHelper('getCurrentYear',() => {
@@ -39,4 +59,4 @@ app.delete('/user',function(req,res) {
     res.send('Got a DELETE request at /user');
 })
 
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
+app.listen(3001, () => console.log("Example app listening on port 3001!"));
