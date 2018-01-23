@@ -46,13 +46,13 @@ app.get('/',(req,res) => res.render('home.hbs',
 app.get('/about', (req, res) => res.render('about.hbs',
     {
         PageTitle: 'About Page',
-        message: 'About page here'
+        message: 'About text page will go here here'
     }));
 
 app.get('/projects', (req, res) => res.render('projects.hbs',
     {
         PageTitle: 'Projects Page',
-        message: 'Some projects here'
+        message: 'Projects text page will go here'
     }));
 
 app.post('/',function(req,res){
