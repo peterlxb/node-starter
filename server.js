@@ -46,7 +46,7 @@ app.get('/',(req,res) => res.render('home.hbs',
 app.get('/about', (req, res) => res.render('about.hbs',
     {
         PageTitle: 'About Page',
-        message: 'Some hbs text here'
+        message: 'About page here'
     }));
 
 app.get('/projects', (req, res) => res.render('projects.hbs',
