@@ -4,6 +4,8 @@ const path = require('path');
 const fs = require('fs');
 var hbs = require('hbs');
 
+const port = process.env.PORT || 3001;
+
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 
@@ -65,4 +67,4 @@ app.delete('/user',function(req,res) {
     res.send('Got a DELETE request at /user');
 })
 
-app.listen(3001, () => console.log("Example app listening on port 3001!"));
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
