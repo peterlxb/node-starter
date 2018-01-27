@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { mongoose } = require('./db/mongoose');
 const { ObjectID } = require('mongodb');
 const { Todo } = require('./modles/todo');
-const { User } = require('./modles/User');
+const { User } = require('./modles/user');
 
 const app = express();
 const port = process.env.PORT || 3001;
