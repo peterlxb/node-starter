@@ -102,10 +102,10 @@ app.patch('/todos/:id',(req,res) => {
     });
 });
 
-// POST  users
+// POST  /users
 app.post('/users', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
-    // perform the mongo db
+    
     var user = new User(body);
 
     user.save().then((user) => {
@@ -123,7 +123,6 @@ app.get('/users/me',authenticate,(req,res) => {
 
 app.post('/users/login', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
-    console.log(body);
 
     User.findByCredentials(body.email, body.password).then((user) => {
         return user.generateAuthToken().then((token) => {

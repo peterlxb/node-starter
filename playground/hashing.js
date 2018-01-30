@@ -11,7 +11,7 @@ var password = "123abc!";
 // });
 
 var hashedpassword1 = "$2a$10$m1kEgMbvfDO2wyEtL3xcG.BCTaeAJ2e9jao1qaJFNEvHQPXIolkgu";
-var hashedpassword2 = "$2a$10$5NVP34QwQp7eo/q23etJleGOwnn4XduiqqxDocajHgxXWxY0VH3uG"
+
 bcrypt.compare(password, hashedpassword2, (err,res) => {
     console.log(res);
 })
