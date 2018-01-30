@@ -4,6 +4,7 @@ const { ObjectID } = require('mongodb');
 
 const { app } = require('./../server');
 const { Todo } = require('./../modles/todo');
+const { User } = require('./../modles/user');
 const {todos, populateTodos,users,populateUsers} = require('./seed/seed');
 
 //Mocha's hooks before(), after(), beforeEach(), and afterEach()
@@ -168,5 +169,73 @@ describe('PATCH /todos/:id', () => {
                 expect(res.body.todo.completedAt).to.not.exist;
             })
             .end(done);
+    });
+});
+
+describe('GET /users/me', () => {
+    it('should return user if authenticated', (done) => {
+        request(app)
+            .get('/users/me')
+            .set('x-auth', users[0].tokens[0].token)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body._id).to.equal(users[0]._id.toHexString());
+                expect(res.body.email).to.equal(users[0].email);
+            })
+            .end(done);
+    });
+
+    it('should return 404 if not authenticated', (done) => {
+        request(app)
+            .get('/users/me')
+            .expect(401)
+            .end(done);
+    });
+});
+
+describe('POST /users', () => {
+    it('should create a user', (done) => {
+        var email = "example@example.com";
+        var password = "123abc";
+
+        request(app)
+            .post('/users')
+            .send({email, password})
+            .expect(200)
+            .expect((res) => {
+                expect(res.headers['x-auth']).to.exist;
+                expect(res.body._id).to.exist;
+                expect(res.body.email).to.equal(email);
+            })
+            .end((err) => {
+                if (err) {
+                    return done(err);
+                }
+
+                User.findOne({email}).then((user) => {
+                    expect(user).to.exist;
+                    expect(user.password).to.not.equal(password);
+                    done();
+                });
+            });
+    });
+
+    it('should return validation errors if request invalid', (done) => {
+        request(app)
+            .post('/users')
+            .send({email:"1sdee",password:"123abc"})
+            .expect(400)
+            .end(done)
+    });
+
+    it('should not create user if email in use', (done) => {
+        request(app)
+            .post('/users')
+            .send({
+                email: users[0].email,
+                password:'Password123'
+            })
+            .expect(400)
+            .end(done)
     });
 });
