@@ -4,24 +4,11 @@ const { ObjectID } = require('mongodb');
 
 const { app } = require('./../server');
 const { Todo } = require('./../modles/todo');
-
-//set some test data
-const todos = [{
-    _id: new ObjectID(),
-    text:'First test todo'
-},{
-    _id: new ObjectID(),
-    text:'Second test todo',
-    completed:true,
-    completedAt:333
-}];
+const {todos, populateTodos,users,populateUsers} = require('./seed/seed');
 
 //Mocha's hooks before(), after(), beforeEach(), and afterEach()
-beforeEach((done) => {
-    Todo.remove({}).then(() => {
-        return Todo.insertMany(todos);
-    }).then(() => done());
-});
+beforeEach(populateUsers);
+beforeEach(populateTodos);
 
 describe('POST /todos', () => {
     it('Should create a new todo', (done) => {
