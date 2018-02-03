@@ -38,6 +38,7 @@
     "mongoose": "^5.0.1",
     "nodemon": "^1.14.11",
     "request": "^2.83.0",
+    "socket.io": "^2.0.4",
     "supertest": "^3.0.0",
     "validator": "^9.3.0",
     "yargs": "^10.1.1"
