@@ -14,10 +14,10 @@ app.use(express.static(publicPath));
 io.on('connection',function(socket) {
     console.log('a user connected');
 
-    socket.emit('chat message', {
+    socket.emit('NewMessage', {
         from: 'peterlxb@gmail.com',
         text: 'Hey, what is',
-        createAt: 123
+        createAt: 123123
     });
 
     socket.on('chat message', (msg) => {
@@ -28,6 +28,7 @@ io.on('connection',function(socket) {
         console.log('user disconnected');
     });
 });
+
 server.listen(port, () =>  {
     console.log(`listening on *:${port}`);
 });
